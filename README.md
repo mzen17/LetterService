@@ -1,0 +1,12 @@
+# Letter Service
+- Estimated Time: 1-3 hours
+
+## Code Planning (15min, tracked):
+- Input: CombinedLetters root folder, as well as day to process
+- Get CombinedLetter Folder
+- Go to Inputfiles
+- Go to Admission and Scholarship, keep list of everything in them (8 digit #s)
+- *Archive* | For each one of these (in admissions and scholarships), recreate the file in the archive folder under a date (input), and under the folder depending on what the list is (admission or scholarship). If the folder for date exists for some reason, delete it. 
+- *Combine* | Run through both of these lists using a nested for loop. If one item equals another, them we have a case to merge. Copy the content of admission.txt and scholarship.txt, and create a new file in Output with folder of the date (if it already exists, delete). Add this number to a list.
+- *Analysis* | Print out length of list specified in previous step, as well as the content of list.
+- From main program, find all dates possible from Admission and Scholarship, and run the process.
