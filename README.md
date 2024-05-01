@@ -1,5 +1,5 @@
 # Letter Service
-- Estimated Time: 1-3 hours
+- Estimated Time: 1-3 hours ~2 hours
 
 ## Code Planning (15min, tracked)
 - Input: CombinedLetters root folder, as well as day to process
@@ -14,10 +14,10 @@
 ## Code Sketching (30 min, tracked)
 Basic outline of code and skeleton methods.
 
-## Test Setup (5 min)
+## Test Setup (5 min, tracked)
 Basic tests
 
-## Code Implementation (60 min)
+## Code Implementation & Debug (60 + 15 min, tracked)
 
 # Misc
 - Bundled the other functions (archive and text report) as part of LetterService class as it is reasonable to think that it should handle every part of the pipeline consisting of letters.
