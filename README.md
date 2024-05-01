@@ -18,6 +18,14 @@ Basic outline of code and skeleton methods.
 Basic tests
 
 ## Code Implementation & Debug (60 + 15 min, tracked)
+Implemented all phases except [From main program, find all dates possible from Admission and Scholarship, and run the process].
+
+## Feature: Automatic date handling Implementation & Debug (15 + 5 min, tracked)
+Automatic date collection (Date collection from Union)
+
+## Code Documentation and Refactoring (15 min)
+
+## Final Code Review and Testing 
 
 # Misc
 - Bundled the other functions (archive and text report) as part of LetterService class as it is reasonable to think that it should handle every part of the pipeline consisting of letters.

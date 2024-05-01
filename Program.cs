@@ -2,15 +2,22 @@
 
 class Program
 {
-    static void Main(string[] args)
-    {
-        string rootFolder = args[0];
-        string date = "20220125";
+    static void Main(string[] args) {
+        List<string> date1 = getFolders("CombinedLetters/Input/Admission/");
+        List<string> date2 = getFolders("CombinedLetters/Input/Scholarship/");
 
+        List<string> dates = date1.Union(date2).ToList();
+
+        foreach(string date in dates)
+        {
+            runOnDate(date.Substring(date.Length - 8));
+        }
+    }
+
+    static void runOnDate(string date)
+    {
         List<string> admissionFiles = ScanFolder("CombinedLetters/Input/Admission/" + date);
         List<string> scholarshipFiles = ScanFolder("CombinedLetters/Input/Scholarship/" + date);
-
-        Console.WriteLine(admissionFiles.Count);
 
         LetterService li = new LetterService(admissionFiles, scholarshipFiles);
 
@@ -21,6 +28,7 @@ class Program
         CreateFolderOverride("CombinedLetters/Archive/Admissions/" + date);
         CreateFolderOverride("CombinedLetters/Archive/Scholarship/" + date);
 
+        // Run Program
         string outputdate_path = "CombinedLetters/Output/" + date + "/";
         li.archiveFiles($"CombinedLetters/Archive/Admissions/{date}/", $"CombinedLetters/Archive/Scholarship/{date}/");
         li.Combine(outputdate_path);
@@ -44,7 +52,8 @@ class Program
         }
         else
         {
-            Console.WriteLine("Directory does not exist: " + folderLocation);
+            Console.WriteLine("Directory does not exist for " + folderLocation);
+            Console.WriteLine("This may be expected behavior if not every scholarship date has a matching admission, as the output will still be correct.");
         }
 
         return fileList;
@@ -68,5 +77,28 @@ class Program
         {
             Directory.CreateDirectory(folderName);
         }
+    }
+
+    /// Scans folder, retrieving all folders and storing them as a list.
+    static List<string> getFolders(string folderLocation)
+    {
+        List<string> folderList = new List<string>();
+        if (Directory.Exists(folderLocation))
+        {
+            // Retrieve all folders in the directory
+            string[] folders = Directory.GetDirectories(folderLocation);
+
+            // Add each folder to the list
+            foreach (string folder in folders)
+            {
+                folderList.Add(folder);
+            }
+        }
+        else
+        {
+            Console.WriteLine("Directory does not exist: " + folderLocation);
+        }
+
+        return folderList;
     }
 }
