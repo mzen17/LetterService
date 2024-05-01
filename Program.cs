@@ -96,7 +96,7 @@ class Program
     /// <summary>
     /// Create a folder (if exists, delete)
     /// </summary> 
-    /// <param name="folderLocation">Folder location to create (a full path)</param>
+    /// <param name="folderName">Folder location to create (a full path)</param>
     static void CreateFolderOverride(string folderName)
     {
         if (Directory.Exists(folderName))
@@ -110,7 +110,7 @@ class Program
     /// <summary>
     /// Create a folder (if exists, do nothing)
     /// </summary> 
-    /// <param name="folderLocation">Folder location to create (a full path)</param>
+    /// <param name="folderName">Folder location to create (a full path)</param>
     static void CreateFolder(string folderName)
     {
         if (!Directory.Exists(folderName))

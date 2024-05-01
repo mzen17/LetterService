@@ -19,7 +19,7 @@ public interface ILetterService
     /// Create the report and place it in the correct place
     /// Also puts details into analysis.
     /// </summary> 
-    /// <param name="output_location">Output Location for report</param>
+    /// <param name="report_location">Output Location for report</param>
     /// <param name="date">Date to print on report</param>
     void CreateReport(string report_location, string date) ;
     
