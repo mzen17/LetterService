@@ -1,7 +1,7 @@
 # Letter Service
 - Estimated Time: 1-3 hours
 
-## Code Planning (15min, tracked):
+## Code Planning (15min, tracked)
 - Input: CombinedLetters root folder, as well as day to process
 - Get CombinedLetter Folder
 - Go to Inputfiles
@@ -11,5 +11,13 @@
 - *Analysis* | Print out length of list specified in previous step, as well as the content of list.
 - From main program, find all dates possible from Admission and Scholarship, and run the process.
 
-## Code Sketching (30 min)
+## Code Sketching (30 min, tracked)
 Basic outline of code and skeleton methods.
+
+## Test Setup (5 min)
+Basic tests
+
+## Code Implementation (60 min)
+
+# Misc
+- Bundled the other functions (archive and text report) as part of LetterService class as it is reasonable to think that it should handle every part of the pipeline consisting of letters.
