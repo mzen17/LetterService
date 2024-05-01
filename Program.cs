@@ -14,12 +14,16 @@ class Program
         }
     }
 
+    /// <summary>
+    /// Run process on a date (archive, combine, report)
+    /// </summary> 
+    /// <param name="date">Date to look at and scan</param>
     static void runOnDate(string date)
     {
         List<string> admissionFiles = ScanFolder("CombinedLetters/Input/Admission/" + date);
         List<string> scholarshipFiles = ScanFolder("CombinedLetters/Input/Scholarship/" + date);
 
-        LetterService li = new LetterService(admissionFiles, scholarshipFiles);
+        LetterService letterService = new LetterService(admissionFiles, scholarshipFiles);
 
         // Set up paths
         CreateFolder("CombinedLetters/Archive/Admissions");
@@ -30,12 +34,16 @@ class Program
 
         // Run Program
         string outputdate_path = "CombinedLetters/Output/" + date + "/";
-        li.archiveFiles($"CombinedLetters/Archive/Admissions/{date}/", $"CombinedLetters/Archive/Scholarship/{date}/");
-        li.Combine(outputdate_path);
-        li.CreateReport(outputdate_path, date);
+        letterService.archiveFiles($"CombinedLetters/Archive/Admissions/{date}/", $"CombinedLetters/Archive/Scholarship/{date}/");
+        letterService.Combine(outputdate_path);
+        letterService.CreateReport(outputdate_path, date);
     }
 
+
+    /// <summary>
     /// Scans a folder, retrieving all files and storing them as a list
+    /// </summary> 
+    /// <param name="folderLocation">Folder location to look for files</param>
     static List<string> ScanFolder(string folderLocation)
     {
         List<string> fileList = new List<string>();
@@ -59,27 +67,11 @@ class Program
         return fileList;
     }
 
-    /// Create a folder (if exists, delete)
-    static void CreateFolderOverride(string folderName)
-    {
-        if (Directory.Exists(folderName))
-        {
-            // If it exists, delete it and its contents
-            Directory.Delete(folderName, true);
-        }
-        Directory.CreateDirectory(folderName);
-    }
 
-    /// Create a folder (if exists, do nothing)
-    static void CreateFolder(string folderName)
-    {
-        if (!Directory.Exists(folderName))
-        {
-            Directory.CreateDirectory(folderName);
-        }
-    }
-
+    /// <summary>
     /// Scans folder, retrieving all folders and storing them as a list.
+    /// </summary> 
+    /// <param name="folderLocation">Folder location to look for folders</param>
     static List<string> getFolders(string folderLocation)
     {
         List<string> folderList = new List<string>();
@@ -96,9 +88,34 @@ class Program
         }
         else
         {
-            Console.WriteLine("Directory does not exist: " + folderLocation);
+            Console.WriteLine("Warning: Directory does not exist: " + folderLocation);
         }
-
         return folderList;
+    }
+
+    /// <summary>
+    /// Create a folder (if exists, delete)
+    /// </summary> 
+    /// <param name="folderLocation">Folder location to create (a full path)</param>
+    static void CreateFolderOverride(string folderName)
+    {
+        if (Directory.Exists(folderName))
+        {
+            // If it exists, delete it and its contents
+            Directory.Delete(folderName, true);
+        }
+        Directory.CreateDirectory(folderName);
+    }
+
+    /// <summary>
+    /// Create a folder (if exists, do nothing)
+    /// </summary> 
+    /// <param name="folderLocation">Folder location to create (a full path)</param>
+    static void CreateFolder(string folderName)
+    {
+        if (!Directory.Exists(folderName))
+        {
+            Directory.CreateDirectory(folderName);
+        }
     }
 }

@@ -23,7 +23,8 @@ Implemented all phases except [From main program, find all dates possible from A
 ## Feature: Automatic date handling Implementation & Debug (15 + 5 min, tracked)
 Automatic date collection (Date collection from Union)
 
-## Code Documentation and Refactoring (15 min)
+## Code Documentation and Refactoring (15 min, tracked)
+Added documentation.
 
 ## Final Code Review and Testing 
 

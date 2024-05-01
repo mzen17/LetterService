@@ -2,37 +2,54 @@ using System.IO;
 
 public interface ILetterService
 {
+    /// <summary>
     /// Reproduce all files from Input to Output
+    /// </summary> 
+    /// <param name="output_location_admission">Admission Archive Output Location</param>
+    /// <param name="output_location_scholarship">Scholarship Archive Output Location</param>
     void archiveFiles(string output_location_admission, string output_location_scholarship);
 
-    /// Run combine by using last 11 characters of file names
+    /// <summary>
+    /// Run combine by using last 11 characters of file names to detect if scholarship and admission belong to same student.
+    /// </summary> 
+    /// <param name="output_location">Output Location for combined letters</param>
     void Combine(string output_location);
 
+    /// <summary>
     /// Create the report and place it in the correct place
     /// Also puts details into analysis.
+    /// </summary> 
+    /// <param name="output_location">Output Location for report</param>
+    /// <param name="date">Date to print on report</param>
     void CreateReport(string report_location, string date) ;
     
+    /// <summary>
     /// Combine two letter files into one file. 
+    /// </summary> 
+    /// <param name="inputFile1">File path for the first letter</param>
+    /// <param name="inputFile2">File path for the first letter</param>
+    /// <param name="resultFile">File path for the first letter</param>
     void CombineTwoLetters(string inputFile1, string inputFile2, string resultFile);
 }
 
 public class LetterService : ILetterService
 {
-    private List<string> admissionFiles;
-    private List<string> scholarshipFiles;
+    private List<string> admissionFiles; // Variable for tracking list of admission files (file paths)
+    private List<string> scholarshipFiles; // Variable for tracking list of scholarship files (file paths)
 
-    private List<string> outputed;
+    private List<string> concated_letters; // Variable for tracking merged files
 
     /// Constructor that creates and initializes files
     public LetterService(List<string> af, List<string> sf) 
     {
         admissionFiles = af;
         scholarshipFiles = sf;
-        outputed = new List<string>();
+        concated_letters = new List<string>();
     }
 
     public void archiveFiles(string output_location_admission, string output_location_scholarship) 
     {
+        // Move all admission files to specified place
         foreach (string file in admissionFiles) 
         {
             string fileCNT = File.ReadAllText(file);
@@ -41,6 +58,8 @@ public class LetterService : ILetterService
             string correct_filename = file.Substring(file.Length - 22);
             File.WriteAllText(output_location_admission + correct_filename, fileCNT);
         }
+
+        // Move all scholarship files to specified place
         foreach (string file in scholarshipFiles)
         {
             string fileCNT = File.ReadAllText(file);
@@ -61,7 +80,7 @@ public class LetterService : ILetterService
 
     public void Combine(string output_location) 
     {
-        List<string> merged = new List<string>();
+        List<string> merged_files = new List<string>();
         foreach(string file in admissionFiles) 
         {
             foreach(string file2 in scholarshipFiles) 
@@ -69,13 +88,14 @@ public class LetterService : ILetterService
                 // This will only be true if the 8 digit University IDs are equal
                 if (file.Substring(file.Length - 12) == file2.Substring(file2.Length - 12))
                 {
-                    string newFileName = file.Substring(file.Length - 12).Substring(0, 8) + "+" + file2.Substring(file2.Length - 12);
+                    // Last 12 letters (Substring(file.Length - 12)) gets filename without scholarship/admission
+                    string newFileName = file.Substring(file.Length - 12);
                     CombineTwoLetters(file, file2, output_location + newFileName);
-                    merged.Add(file.Substring(file.Length - 12));
+                    merged_files.Add(file.Substring(file.Length - 12));
                 }
             }
         }
-        outputed = merged;
+        concated_letters = merged_files;
     }
 
     public void CreateReport(string report_location, string date) 
@@ -85,12 +105,13 @@ public class LetterService : ILetterService
         string month = date.Substring(4, 2);
         string day = date.Substring(6, 2);
 
+        // Correct headers
         string reportHeader = $"{month}/{day}/{year} Report\n--------------------------------\n\n";
-        string combineLetterHeader = $"Number of Combined Letters: {outputed.Count}\n";
-
+        string combineLetterHeader = $"Number of Combined Letters: {concated_letters.Count}\n";
         string formattedOutput = reportHeader + combineLetterHeader;
 
-        foreach(string combine in outputed)
+        // Go through list of tracked merged, and simply append them to file.
+        foreach(string combine in concated_letters)
         {
             // ID is first 8 digit of [ID.txt]
             string id = combine.Substring(0, 8);
